@@ -10,7 +10,7 @@
   export default {
     name: 'ThankYouPage',
     mounted() {
-      // Optional: Perform any additional operations when the component is mounted
+      localStorage.setItem('basketItems', []);
     }
   }
   </script>

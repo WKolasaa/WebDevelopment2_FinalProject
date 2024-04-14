@@ -34,12 +34,16 @@ export const login = defineStore('store', {
                         password: password
                     })
                     .then((response) => {
-                        console.log(response.data);
-                        this.token = response.data.jwt;
-                        this.user = response.data.user;
-                        localStorage.setItem('token', this.token);
-                        localStorage.setItem('user', JSON.stringify(this.user)); // Store user as string
-                        resolve();
+                        if(typeof response.data.user === 'undefined'){
+                            reject(response.data.error);
+                        } else {
+                            console.log(response.data);
+                            this.token = response.data.jwt;
+                            this.user = response.data.user;
+                            localStorage.setItem('token', this.token);
+                            localStorage.setItem('user', JSON.stringify(this.user)); // Store user as string
+                            resolve();
+                        }
                     })
                     .catch((error) => {
                         reject(error);

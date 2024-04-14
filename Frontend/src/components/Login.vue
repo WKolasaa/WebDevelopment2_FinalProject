@@ -4,6 +4,7 @@
       <div class="row">
         <div class="col-md-6">
           <form>
+            <div id="message" class="alert alert-light"></div>
             <div class="mb-3">
               <label for="inputUsername" class="form-label">Username</label>
               <input id="inputUsername" type="text" class="form-control" v-model="username" />
@@ -47,9 +48,13 @@ export default {
           this.$router.replace('/products');
         })
         .catch(error => {
-          console.log(error);
+          this.showMessage('Invalid username and/or password', 'alert-danger');
         });
     },
+    showMessage(message, alertClass){
+            var messageDiv = document.getElementById('message');
+            messageDiv.innerHTML = '<div class="alert ' + alertClass + '">' + message + '</div>';
+        }
   },
 }
 </script>

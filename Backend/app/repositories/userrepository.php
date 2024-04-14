@@ -33,7 +33,7 @@ class UserRepository extends Repository
             }
 
         } catch (PDOException $e) {
-            echo $e;
+            throw new \Exception($e->getMessage());
         }
     }
 

@@ -17,29 +17,31 @@ class UserController extends Controller
     }
 
     public function login() {
+        try{
+            // read user data from request body
+            $userdata = $this->createObjectFromPostedJson("Models\\User");
 
-        // read user data from request body
-        $userdata = $this->createObjectFromPostedJson("Models\\User");
+            // get user from db
+            $user = $this->service->checkUsernamePassword($userdata->getUserName(), $userdata->getPassword());
 
-        // get user from db
-        $user = $this->service->checkUsernamePassword($userdata->getUserName(), $userdata->getPassword());
+            // if the method returned false, the username and/or password were incorrect
+            if($user){
+                // generate jwt
+                $jwt = $this->generateJwt($user);
 
-        // if the method returned false, the username and/or password were incorrect
-        if($user){
-            // generate jwt
-            $jwt = $this->generateJwt($user);
-
-            // return jwt
-            $array = array(
-                "jwt" => $jwt,
-                "user" => $user
-            );
-            $this->respond($array);
+                // return jwt
+                $array = array(
+                    "jwt" => $jwt,
+                    "user" => $user
+                );
+                $this->respond($array);
+            }
+            else{
+                echo("Username and/or password incorrect");
+            }
+        } catch (Exception $e) {
+            echo("Error while logging in");
         }
-        else{
-            echo("Username and/or password incorrect");
-        }
-
     }
 
     private function generateJwt($user){

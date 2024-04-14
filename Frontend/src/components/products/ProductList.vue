@@ -3,6 +3,7 @@
     <div class="container">
       <h2 class="mt-3 mt-lg-5">Products</h2>
       
+      <button class="btn btn-success" v-if="role == 'admin'" @click="addProduct()">Add product</button>&nbsp;&nbsp;
         
       <div class="row mt-3">
         <product-list-item
@@ -21,9 +22,9 @@
             <button class="btn btn-danger btn-sm float-right" @click="removeItem(index)">Remove</button>
           </li>
         </ul>
-        <button type="button" class="btn btn-primary mt-3" @click="this.$router.push('/createproduct');">
-            Pay
-        </button>
+        <a href="/checkout" class="btn btn-primary mt-3">
+          Pay
+        </a>
       </div>
       <p v-else class="mt-3">Your basket is empty.</p>
 
@@ -34,7 +35,9 @@
 <script>
 import axios from "axios";
 import { basketStore } from "@/stores/basket";
+import { login } from "@/stores/login";
 import ProductListItem from "./ProductListItem.vue";
+import { computed } from "vue";
 
 export default {
   name: "ProductList",
@@ -43,8 +46,11 @@ export default {
   },
   setup() {
     const basket = basketStore();
+    const loggedUser = login();
 
-    return { basket };
+    const role = computed(() => loggedUser.getUserRole);
+
+    return { basket, role };
   },
   data() {
     return {
@@ -70,6 +76,9 @@ export default {
     removeItem(index) {
       this.basket.removeItem(index);
     },
+    addProduct(id) {
+      this.$router.push('/createproduct/');
+    }
   },
 };
 </script>

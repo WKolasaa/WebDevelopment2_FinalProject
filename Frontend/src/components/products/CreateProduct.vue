@@ -29,15 +29,8 @@
         </div>
 
         <div class="input-group mb-3">
-          <span class="input-group-text">Category</span>
-          <select class="form-select" v-model="product.category_id">
-            <option
-              v-for="category in categories"
-              :key="category.id"
-              :value="category.id">
-              {{ category.name }}
-            </option>
-          </select>
+          <span class="input-group-text">Quantity</span>
+          <input type="text" class="form-control" v-model="product.quantity" />
         </div>
 
         <div class="input-group mt-4">
@@ -69,13 +62,14 @@ export default {
         price: "",
         description: "",
         image: "",
-        category_id: 0,
+        quantity: "",
       },
       categories: [],
     };
   },
   methods: {
     addProduct() {
+      console.log(this.product);
       axios
         .post("http://localhost/products", this.product)
         .then((res) => {

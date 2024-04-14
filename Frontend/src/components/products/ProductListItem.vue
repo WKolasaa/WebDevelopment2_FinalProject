@@ -2,17 +2,19 @@
   <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xxl-3 p-2">
     <div class="card product-card h-100">
       <div class="card-body">
-        <img :src="product.image"/>
-        <div class="float-start">
-          <p>{{ product.name }}</p>
-          <p>{{ product.description }}</p>
-          <p>{{ product.quantity }}</p>
+        <div class="product-image">
+          <img :src="product.image" class="img-fluid" alt="Product Image"/>
         </div>
-        <span class="price float-end">{{ product.price }}</span>
+        <div class="float-start">
+          <strong><p>{{ product.name }}</p></strong>
+          <p>{{ product.description }}</p>
+          <p>Quantity: {{ product.quantity }}</p>
+        </div>
+        <span class="price float-end">{{ product.price }} €</span>
       </div>
       <div class="card-footer">
-        <button class="btn btn-success" @click="addBasket(product)">Add</button>&nbsp;&nbsp;
-        <button class="btn btn-warning" v-if="role == 'admin'" @click="editProduct(product.id)">Edit</button>
+        <button class="btn btn-success" @click="addBasket(product)">Add to basket</button>&nbsp;&nbsp;
+        <button class="btn btn-warning" v-if="role == 'admin'" @click="editProduct(product.id)">Edit</button>&nbsp;&nbsp;
         <button class="btn btn-danger" v-if="role == 'admin'" @click="deleteProduct(product.id)">Delete</button>&nbsp;&nbsp;
       </div>
     </div>
@@ -37,7 +39,12 @@ export default {
     const role = computed(() => loggedUser.getUserRole);
 
     function addBasket(item) {
-      basket.addItem(item);
+      if(role.value !== null){
+        basket.addItem(item);
+      }
+      else{
+        alert("You need to login to add items to the basket.");
+      }
     }
 
     return { addBasket, basket, role };
@@ -60,4 +67,9 @@ export default {
 </script>
 
 <style>
+.card-img-top {
+  width: 100%; /* Make the image fill the entire width of the card */
+  height: 100%; /* Make the image fill the entire height of the card */
+  object-fit: cover; /* Maintain aspect ratio and cover the entire space */
+}
 </style>

@@ -3,6 +3,8 @@
 namespace Controllers;
 
 use Exception;
+use Models\Product;
+use Repositories\ProductRepository;
 use Services\ProductService;
 
 class ProductController extends Controller
@@ -38,7 +40,18 @@ class ProductController extends Controller
     public function create()
     {
         try {
-            $product = $this->createObjectFromPostedJson("Models\\Product");
+            $json = file_get_contents('php://input');
+            $productJson = json_decode($json);
+
+            //var_dump($productJson);
+
+            $product = new Product();
+            $product->name = $productJson->name;
+            $product->price = $productJson->price;
+            $product->description = $productJson->description;
+            $product->image = $productJson->image;
+            $product->quantity = $productJson->quantity;
+
             $product = $this->service->insert($product);
 
         } catch (Exception $e) {
@@ -51,7 +64,19 @@ class ProductController extends Controller
     public function update($id)
     {
         try {
-            $product = $this->createObjectFromPostedJson("Models\\Product");
+            $json = file_get_contents('php://input');
+            $productJson = json_decode($json);
+
+            var_dump($productJson);
+
+            $product = new Product();
+            $product->id = $productJson->id;
+            $product->name = $productJson->name;
+            $product->price = $productJson->price;
+            $product->description = $productJson->description;
+            $product->image = $productJson->image;
+            $product->quantity = $productJson->quantity;
+
             $product = $this->service->update($product, $id);
 
         } catch (Exception $e) {

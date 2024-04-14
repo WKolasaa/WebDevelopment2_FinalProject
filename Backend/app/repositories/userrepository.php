@@ -21,21 +21,17 @@ class UserRepository extends Repository
             $user = $this->createObject($stmt->fetch());
 
             // verify if the password matches the hash in the database
-            //$result = $this->verifyPassword($password, $user->getPassword());
+            $result = $this->verifyPassword($password, $user->getPassword());
 
-            if($password == $user->password){
-                $result = true;
+            if($result){
+                // do not pass the password hash to the caller
+                $user->password = "";
+
+                return $user;
             } else {
                 $result = false;
             }
 
-            if (!$result)
-                return false;
-
-            // do not pass the password hash to the caller
-            $user->password = "";
-
-            return $user;
         } catch (PDOException $e) {
             echo $e;
         }

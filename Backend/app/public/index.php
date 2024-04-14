@@ -31,6 +31,13 @@ $router->delete('/categories/(\d+)', 'CategoryController@delete');
 $router->post('/users/login', 'UserController@login');
 $router->post('/users/register', 'UserController@register');
 
+// order logic
+$router->get('/orders', 'OrderController@getAll');
+$router->get('/orders/(\d+)', 'OrderController@getOne');
+$router->post('/order/create', 'OrderController@create');
+$router->put('/orders/(\d+)', 'OrderController@update');
+$router->delete('/orders/(\d+)', 'OrderController@delete');
+
 
 // Run it!
 $router->run();

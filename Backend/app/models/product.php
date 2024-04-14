@@ -5,11 +5,10 @@ class Product {
 
     public int $id;
     public string $name;
-    public string $price;
     public string $description;
+    public float $price;
     public string $image;
-    public string $category_id;
-    public Category $category;
+    public int $quantity;
  
 }
 

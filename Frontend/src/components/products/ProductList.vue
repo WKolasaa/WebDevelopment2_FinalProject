@@ -2,9 +2,8 @@
   <section>
     <div class="container">
       <h2 class="mt-3 mt-lg-5">Products</h2>
-        <button type="button" class="btn btn-primary mt-3" @click="this.$router.push('/createproduct');">
-            Add product
-          </button>
+      
+        
       <div class="row mt-3">
         <product-list-item
           v-for="product in products"
@@ -13,19 +12,39 @@
           @update="update"
         />
       </div>
+
+      <h2 class="mt-5">Your Basket</h2>
+      <div v-if="basket.items.length > 0">
+        <ul class="list-group mt-3">
+          <li class="list-group-item" v-for="(item, index) in basket.items" :key="index">
+            {{ item.name }} - {{ item.price }}
+            <button class="btn btn-danger btn-sm float-right" @click="removeItem(index)">Remove</button>
+          </li>
+        </ul>
+        <button type="button" class="btn btn-primary mt-3" @click="this.$router.push('/createproduct');">
+            Pay
+        </button>
+      </div>
+      <p v-else class="mt-3">Your basket is empty.</p>
+
     </div>
   </section>
 </template>
 
 <script>
 import axios from "axios";
-
+import { basketStore } from "@/stores/basket";
 import ProductListItem from "./ProductListItem.vue";
 
 export default {
   name: "ProductList",
   components: {
     ProductListItem,
+  },
+  setup() {
+    const basket = basketStore();
+
+    return { basket };
   },
   data() {
     return {
@@ -43,7 +62,13 @@ export default {
           console.log(result);
           this.products = result.data;
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          console.error("Error fetching products:", error);
+          // Optionally, display an error message to the user
+        });
+    },
+    removeItem(index) {
+      this.basket.removeItem(index);
     },
   },
 };

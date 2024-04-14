@@ -27,5 +27,10 @@ $router->post('/categories', 'CategoryController@create');
 $router->put('/categories/(\d+)', 'CategoryController@update');
 $router->delete('/categories/(\d+)', 'CategoryController@delete');
 
+// user logic
+$router->post('/users/login', 'UserController@login');
+$router->post('/users/register', 'UserController@register');
+
+
 // Run it!
 $router->run();

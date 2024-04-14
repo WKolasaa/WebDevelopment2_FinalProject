@@ -13,6 +13,8 @@ services:
             dockerfile: PHP.Dockerfile
         volumes:
             - ./app:/app
+        environment:
+            - secret_key=secret123
     mysql:
         image: mariadb:latest
         environment:

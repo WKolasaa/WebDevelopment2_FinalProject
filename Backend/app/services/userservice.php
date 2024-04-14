@@ -15,6 +15,14 @@ class UserService {
     public function checkUsernamePassword($username, $password) {
         return $this->repository->checkUsernamePassword($username, $password);
     }
+
+    public function registerUser($user) {
+        return $this->repository->registerUser($user);
+    }
+
+    public function getUserByUserName($username) {
+        return $this->repository->getUserByUserName($username);
+    }
 }
 
 ?>

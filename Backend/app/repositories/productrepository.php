@@ -10,18 +10,13 @@ use Repositories\Repository;
 
 class ProductRepository extends Repository
 {
-    function getAll($offset = NULL, $limit = NULL)
+    function getAll()
     {
         try {
-            $query = "SELECT product.*, category.name as category_name FROM product INNER JOIN category ON product.category_id = category.id";
-            if (isset($limit) && isset($offset)) {
-                $query .= " LIMIT :limit OFFSET :offset ";
-            }
+            $query = "SELECT productID, productName, productDescription, productPrice, productImage, productQuantity FROM products";
+
             $stmt = $this->connection->prepare($query);
-            if (isset($limit) && isset($offset)) {
-                $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
-                $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
-            }
+
             $stmt->execute();
 
             $products = array();
@@ -55,17 +50,13 @@ class ProductRepository extends Repository
 
     function rowToProduct($row) {
         $product = new Product();
-        $product->id = $row['id'];
-        $product->name = $row['name'];
-        $product->price = $row['price'];
-        $product->description = $row['description'];
-        $product->image = $row['image'];
-        $product->category_id = $row['category_id'];
-        $category = new Category();
-        $category->id = $row['category_id'];
-        $category->name = $row['category_name'];
+        $product->id = $row['productID'];
+        $product->name = $row['productName'];
+        $product->price = $row['productPrice'];
+        $product->description = $row['productDescription'];
+        $product->image = $row['productImage'];
+        $product->quantity = $row['productQuantity'];
 
-        $product->category = $category;
         return $product;
     }
 

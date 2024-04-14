@@ -1,7 +1,7 @@
 <template>
   <section>
     <div class="container">
-      <h2 class="mt-3 mt-lg-5">Welcome to the homepage</h2>
+      <h3>Home Page!</h3>
     </div>
   </section>
 </template>
@@ -13,4 +13,5 @@ export default {
 </script>
 
 <style>
+
 </style>

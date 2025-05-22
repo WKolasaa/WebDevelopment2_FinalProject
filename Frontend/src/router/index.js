@@ -10,7 +10,7 @@ import Checkout from '../components/Checkout.vue';
 import OrderPlaced from '../components/OrderPlaced.vue';
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory("http://localhost"),
   routes: [
     { path: '/', component: Home },
     { path: '/products', component: ProductList },

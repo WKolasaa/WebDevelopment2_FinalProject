@@ -19,7 +19,7 @@
         <ul class="list-group mt-3">
           <li class="list-group-item" v-for="(item, index) in basket.items" :key="index">
             {{ item.name }} - {{ item.price }}
-            <button class="btn btn-danger btn-sm float-right" @click="removeItem(index)">Remove</button>
+            <button class="btn btn-danger btn-sm float-right" @click="removeItem(item.basketId)">Remove</button>
           </li>
         </ul>
         <a href="/checkout" class="btn btn-primary mt-3">

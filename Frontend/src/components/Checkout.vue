@@ -21,7 +21,7 @@
               </li>
               <li class="list-group-item d-flex justify-content-between">
                 <strong><span>Total (EURO)</span></strong>
-                <strong><span class="text-muted">€{{ basket.totalPrice }}</span></strong>
+                <strong><span class="text-muted">€{{ basket.totalPrice.toFixed(2) }}</span></strong>
               </li>
             </ul>
           </div>

@@ -34,7 +34,7 @@
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Account
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <div class="dropdown-menu dropdown-menu-end"  aria-labelledby="navbarDropdown">
                         <!-- Content to be conditionally rendered -->
                         <ul id="loggedOutContent" class="navbar-nav" v-if="!loggedIn">
                             <li class="nav-item"><a class="nav-link" href="/login">Log in</a></li>
@@ -67,6 +67,7 @@ export default {
 
       const logout = () => {
         loggeduser.logout(); 
+        window.location.href = '/';
       };
 
       return { loggedIn, logout };
